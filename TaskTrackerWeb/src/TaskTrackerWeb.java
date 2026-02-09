@@ -7,38 +7,58 @@ public class TaskTrackerWeb {
 
 
     public static void main (String[] args){
-        try (Scanner input = new Scanner(System.in)){
-            ArrayList<Task> userTasks = new ArrayList<>();
+        String userMenuItem = "";
+        try (Scanner menuItem = new Scanner(System.in)) {
+            do {
+                System.out.println("Select a menu item ( 1 | 2| 3 ): ");
+                System.out.println("--------------------");
+                System.out.println(" 1 | Add task   | ");
+                System.out.println(" 2 | List tasks | ");
+                System.out.println(" 3 | Exit       | ");
 
-            for (int i = 0; i < 3; i++)
-            {
-                Task userTask = new Task();
-                System.out.println("\nEnter title of your task: ");
+                if(menuItem.hasNextLine()){
+                    userMenuItem = menuItem.nextLine().trim();
+                    switch (userMenuItem) {
+                        case "1":
+                                ArrayList<Task> userTasks = new ArrayList<>();
 
-                if (input.hasNextLine()){
-                    userTask.setTitle(input.nextLine());
-                    input.nextLine();
+                                for (int i = 0; i < 3; i++) {
+                                    Task userTask = new Task();
+                                    System.out.println("Enter title of your task: ");
+                                    userTask.setTitle(menuItem.nextLine().trim());
+
+                                    System.out.println("Enter priority (1-3): ");
+
+                                    String prior = menuItem.nextLine().trim();
+                                    try {
+                                        userTask.setPriority(Byte.parseByte(prior));
+                                    }
+                                    catch (NumberFormatException e){
+                                        userTask.setPriority((byte) 1);
+                                    };
+
+                                    userTasks.add(userTask);
+                                }
+
+                                for (int i = 0; i < 3; i++) {
+                                    System.out.println("You entered title of task: " + userTasks.get(i).getTitle());
+                                    System.out.println("You Entered priority of task: " + userTasks.get(i).getPriority());
+                                }
+
+                            break;
+                        case "2":
+                            System.out.println("You have not tasks now");
+                            break;
+                        case "3":
+                            System.out.println("Exit");
+                            break;
+                        default:
+                            System.out.println("Repeat your choose");
+                    }
                 } else {
-                    userTask.setTitle("New task without title");
+                    System.out.println("Your select is not correct");
                 }
-
-                System.out.println("\nEnter priority (1-3): ");
-
-                if (input.hasNextByte()) {
-                    userTask.setPriority(input.nextByte());
-                    input.nextLine();
-                } else {
-                    userTask.setPriority((byte)1);
-                }
-
-                userTasks.add(userTask);
-            }
-
-            for (int i = 0; i<3; i++)
-            {
-                System.out.println("\nYou entered title of task: " + userTasks.get(i).getTitle());
-                System.out.println("\nYou Entered priority of task: " + userTasks.get(i).getPriority());
-            }
+            } while (!userMenuItem.trim().equals("3"));
         }
     }
 }
