@@ -1,11 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Task Tracker</title>
 </head>
 <body>
+
 <h1>Task Tracker</h1>
-<p>Web version started ✅</p>
+
+<form method="post" action="/tasks">
+
+    <input name = "title">
+    <select name = "priority">
+        <option>LOW</option>
+        <option>MEDIUM</option>
+        <option>HIGH</option>
+        <option>CRITICAL</option>
+    </select>
+
+    <button type = "submit">OK</button>
+
+</form>
+
+
+<h2>Tasks:</h2>
+
+<ul>
+    <li th:each="t : ${tasks}">
+        <span th:text="${t.title}"></span>
+        <span th:text="${t.priority}"></span>
+    </li>
+</ul>
+
 </body>
 </html>
