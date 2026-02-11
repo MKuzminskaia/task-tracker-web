@@ -40,4 +40,10 @@ public class Task {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public String toString(){
+        String output;
+        output = " id: " + String.valueOf(this.id)  + "; Title:  " + this.title + "; Status:  " + String.valueOf(this.status) + "; Priority: " + String.valueOf(this.priority) ;
+        return output;
+    }
 }

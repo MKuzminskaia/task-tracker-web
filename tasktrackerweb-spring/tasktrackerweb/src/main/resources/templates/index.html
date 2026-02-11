@@ -25,10 +25,13 @@
 
 <h2>Tasks:</h2>
 
+
 <ul>
     <li th:each="t : ${tasks}">
         <span th:text="${t.title}"></span>
         <span th:text="${t.priority}"></span>
+        <span th:text="${t.status}"></span>
+        <form method="post" action="/tasks/done"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Done </button> </form>
     </li>
 </ul>
 

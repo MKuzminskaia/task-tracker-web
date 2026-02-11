@@ -28,11 +28,22 @@ public class HomeController {
         if(!title.trim().isEmpty())
             taskService.add(title.trim(),priority);
 
-
-        System.out.println(taskService.getAll());
+        for(int i = 0; i < taskService.getAll().size();  i++)
+            System.out.println(taskService.getAll().get(i));
 
         return "redirect:/";
     }
+
+    @PostMapping("/tasks/done")
+    public String markTaskDone(@RequestParam int id){
+        taskService.markDone(id);
+
+        for(int i = 0; i < taskService.getAll().size();  i++)
+            System.out.println(taskService.getAll().get(i));
+
+        return "redirect:/";
+    }
+
 
 
 }
