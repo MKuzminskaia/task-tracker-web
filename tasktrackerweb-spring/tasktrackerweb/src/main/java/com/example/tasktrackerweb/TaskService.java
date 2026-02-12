@@ -23,7 +23,11 @@ public class TaskService {
         if (this.findById(id) != null) {
             this.findById(id).setStatus(Status.DONE);
         }
-        //this.getAll().get(id).setStatus(Status.DONE);
+    }
+
+    public void deleteTask( int id){
+        if(this.findById(id) != null)
+            this.tasks.remove(this.findById(id));
     }
 
     public Task findById(int id) {

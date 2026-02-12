@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
-    private TaskService taskService;
+    private final TaskService taskService;
 
     public  HomeController (TaskService taskService){
         this.taskService = taskService;
@@ -45,5 +45,14 @@ public class HomeController {
     }
 
 
+    @PostMapping("/tasks/delete")
+    public String deleteTask(@RequestParam int id){
+        taskService.deleteTask(id);
+
+        for(int i = 0; i < taskService.getAll().size();  i++)
+            System.out.println(taskService.getAll().get(i));
+
+        return "redirect:/";
+    }
 
 }

@@ -31,7 +31,9 @@
         <span th:text="${t.title}"></span>
         <span th:text="${t.priority}"></span>
         <span th:text="${t.status}"></span>
-        <form method="post" action="/tasks/done"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Done </button> </form>
+
+        <form method="post" action="/tasks/done" th:if="${t.status.name() != 'DONE'}"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Done </button> </form>
+        <form method="post" action="/tasks/delete"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Delete </button> </form>
     </li>
 </ul>
 
