@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("tasks", taskService.getAll());
+        model.addAttribute("tasks", taskService.sortCopyTasks());
         return "index";
     }
 
@@ -25,11 +25,10 @@ public class HomeController {
     public String addTask( @RequestParam String title,
                            @RequestParam Priority priority){
 
-        if(!title.trim().isEmpty())
+        if(priority == null)
+            priority = Priority.MEDIUM;
+        if(!title.trim().isEmpty() && title.trim().length() <= 60)
             taskService.add(title.trim(),priority);
-
-        for(int i = 0; i < taskService.getAll().size();  i++)
-            System.out.println(taskService.getAll().get(i));
 
         return "redirect:/";
     }
@@ -38,9 +37,12 @@ public class HomeController {
     public String markTaskDone(@RequestParam int id){
         taskService.markDone(id);
 
-        for(int i = 0; i < taskService.getAll().size();  i++)
-            System.out.println(taskService.getAll().get(i));
+        return "redirect:/";
+    }
 
+    @PostMapping("/tasks/process")
+    public String markTaskInProcess(@RequestParam int id){
+        taskService.markInProcess(id);
         return "redirect:/";
     }
 
@@ -48,9 +50,6 @@ public class HomeController {
     @PostMapping("/tasks/delete")
     public String deleteTask(@RequestParam int id){
         taskService.deleteTask(id);
-
-        for(int i = 0; i < taskService.getAll().size();  i++)
-            System.out.println(taskService.getAll().get(i));
 
         return "redirect:/";
     }

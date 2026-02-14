@@ -3,15 +3,22 @@ package com.example.tasktrackerweb;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Service
 public class TaskService {
     private final ArrayList<Task> tasks = new ArrayList<>();
     private int id = 0;
 
-
     public ArrayList<Task> getAll(){
-        return this.tasks;
+        ArrayList <Task> copiedTasks = new ArrayList<>(this.tasks);
+        return copiedTasks;
+    }
+    public ArrayList<Task> sortCopyTasks(){
+        ArrayList <Task> result = new ArrayList<>(this.tasks);
+
+        result.sort(Task::compareStatusPrio);
+        return result;
     }
 
     public void add(String title, Priority priority){
@@ -22,6 +29,12 @@ public class TaskService {
     public void markDone( int id){
         if (this.findById(id) != null) {
             this.findById(id).setStatus(Status.DONE);
+        }
+    }
+
+    public void markInProcess( int id){
+        if (this.findById(id) != null) {
+            this.findById(id).setStatus(Status.IN_PROCESS);
         }
     }
 

@@ -17,24 +17,34 @@
         <option>HIGH</option>
         <option>CRITICAL</option>
     </select>
-
     <button type = "submit">OK</button>
-
 </form>
-
 
 <h2>Tasks:</h2>
 
 
-<ul>
-    <li th:each="t : ${tasks}">
-        <span th:text="${t.title}"></span>
-        <span th:text="${t.priority}"></span>
-        <span th:text="${t.status}"></span>
+<table>
+    <thead>
+        <tr>
+             <th>Id</th>
+             <th>Task</th>
+             <th>Priority</th>
+             <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="t : ${tasks}" >
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.title}"></td>
+            <td th:text="${t.priority}"></td>
+            <td th:text="${t.status}"></td>
+            <td> <form method="post" action="/tasks/process" th:if="${t.status.name() != 'IN_PROCESS' && t.status.name() != 'DONE'}"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Start </button> </form> </td>
+            <td> <form method="post" action="/tasks/done" th:if="${t.status.name() != 'DONE'}"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Done </button> </form> </td>
+            <td> <form method="post" action="/tasks/delete"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Delete </button> </form> </td>
+        </tr>
+    </tbody>
+</table>
 
-        <form method="post" action="/tasks/done" th:if="${t.status.name() != 'DONE'}"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Done </button> </form>
-        <form method="post" action="/tasks/delete"> <input type="hidden" name = "id" th:value="${t.id}"><button type="submit"> Delete </button> </form>
-    </li>
 </ul>
 
 </body>

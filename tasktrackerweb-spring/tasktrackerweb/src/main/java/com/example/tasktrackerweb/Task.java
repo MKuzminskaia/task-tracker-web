@@ -46,4 +46,11 @@ public class Task {
         output = " id: " + String.valueOf(this.id)  + "; Title:  " + this.title + "; Status:  " + String.valueOf(this.status) + "; Priority: " + String.valueOf(this.priority) ;
         return output;
     }
+
+
+    public static int compareStatusPrio(Task o1, Task o2) {
+        return o1.getStatus().ordinal() != o2.getStatus().ordinal()
+                ? (o1.getStatus().ordinal() - o2.getStatus().ordinal())
+                : o1.getPriority().ordinal() - o2.getPriority().ordinal();
+    }
 }
