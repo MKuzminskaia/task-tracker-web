@@ -26,21 +26,28 @@ public class TaskService {
         this.tasks.add(task);
     }
 
-    public void markDone( int id){
+    public boolean markDone( int id){
         if (this.findById(id) != null) {
             this.findById(id).setStatus(Status.DONE);
+            return true;
         }
+        return false;
     }
 
-    public void markInProcess( int id){
+    public boolean markInProcess( int id){
         if (this.findById(id) != null) {
             this.findById(id).setStatus(Status.IN_PROCESS);
+            return true;
         }
+        return false;
     }
 
-    public void deleteTask( int id){
-        if(this.findById(id) != null)
+    public boolean deleteTask( int id){
+        if(this.findById(id) != null) {
             this.tasks.remove(this.findById(id));
+            return true;
+        }
+        return false;
     }
 
     public Task findById(int id) {
